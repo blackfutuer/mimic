@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" id="viewport" />
+  <style>
+    body{
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <style>
+    .f_card {
+      height: 60px;
+      margin: 5px;
+      border-bottom: 1px solid #ccc;
+    }
+    .mimic-ad{
+    }
+  </style>
+  <script>
+    //频道feed植入广告
+      window["channelPushs"] = [
+        {"cardPos":3,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000056287\" data-saxpos=\"3\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":9,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000056288\" data-saxpos=\"9\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":13,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"E98FEBEF5E96\" data-saxpos=\"13\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":15,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000056289\" data-saxpos=\"15\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":21,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000056415\" data-saxpos=\"21\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":27,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000056416\" data-saxpos=\"27\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":33,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000056433\" data-saxpos=\"33\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":39,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000056434\" data-saxpos=\"39\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":45,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000056435\" data-saxpos=\"45\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":51,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000057093\" data-saxpos=\"51\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":57,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"PDPS000000057094\" data-saxpos=\"57\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"},
+        {"cardPos":63,"cardName":"card_module","cardIn":true,"domHTML":"<div sax-type=\"proxy\" class=\"j_native\" data-id=\"WAPINFEED10\" data-saxpos=\"63\" data-saxname=\"card_module\" data-saxin=\"1\"><\/div>"}
+      ];
+    </script>
+    <script src="../usage.js"></script>
+    <script>
+    var count = 0
+    function createFeed(len) {
+      while (len--) {
+        var feed = document.createElement('a')
+        feed.href = '//sina.cn'
+        feed.innerHTML = '<div class="f_card">我是信息流新闻' + (++count) + '</div>'
+        document.body.insertBefore(feed, document.querySelector('#morecontianer'))
+      }
+    }
+
+    function more() {
+      createFeed(10)
+      sinaad.insert()
+    }
+    more()
+  </script>
+    <a href="javascript:mimic.sns().refresh()" style="display:block; line-height: 40px; text-align:center; font-size: 18px;">换一批广告&raquo;</a>
+  </div>
+<!-- 容内容内容内容内容内容内
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  <h2>1</h2>
+  <div id="my-custom-id-1"></div>
+  <script>
+    mimic.cmd.push(function () {
+      mimic.display('my-custom-id-1')
+    })
+  </script>
+  容内容内容内容内容内容内
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  <h2>2</h2>
+  <div id="my-custom-id-2"></div>
+  <script>
+    mimic.cmd.push(function () {
+      mimic.display('my-custom-id-2')
+    })
+  </script>
+  容内容内容内容内容内容内
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  <h2>3</h2>
+  <div id="my-custom-id-3"></div>
+  <script>
+    mimic.cmd.push(function () {
+      mimic.display('my-custom-id-3')
+    })
+  </script>
+  容内容内容内容内容内容内
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  <h2>4</h2>
+  <div id="my-custom-id-4"></div>
+  <script>
+  // Refresh the bottom slot when it is about to come into view.
+    var refreshed = false;
+
+    // Value of scrollY at which the ad is about to come into view.
+    var adAlmostVisibleScrollValue = 1200;
+
+    // Warning: This is a sample implementation. Listening to onscroll without
+    // any throttling might not be very efficient.
+    var listener = function() {
+      if (window.scrollY >= adAlmostVisibleScrollValue && !refreshed) {
+        mimic.cmd.push(function () {
+          mimic.display('my-custom-id-4')
+        })
+        // Refresh the ad only once.
+        refreshed = true;
+
+        // Remove the listener now.
+        window.removeEventListener('scroll', listener);
+      }
+    }
+    window.addEventListener('scroll', listener);
+  </script>
+  容内容内容内容内容内容内
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  容内容内容内容内容内容内
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+  容内容内容内容内容内容内
+内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内
+  内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容 -->
+  <div id="morecontianer">
+    <a href="javascript:more()" style="display:block; line-height: 40px; text-align:center; font-size: 18px;">加载更多&raquo;</a>
+  </div>
+</body>
+</html>

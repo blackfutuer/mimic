@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> 测试bfcache </title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <a href="./index.html">跳转页面</a>
+  <div id="container"></div>
+  <script>
+    window.cache_bfc = +new Date()
+    var logs = []
+    setInterval(function () {
+      console.log(window.cache_bfc)
+    }, 1000)
+    var worker = new Worker("worker.js"); //创建一个Worker对象并向它传递将在新线程中执行的脚本的URL
+    console.log('init')
+    // worker.onmessage = function(evt){     //接收worker传过来的数据函数
+    //   var now = parseInt(evt.data, 10)
+    //   console.log(now, window.cache_bfc)
+    //   // if (now - cache_bfc > 3000) {
+    //   //   log()
+    //   // }
+    //   //cache_bfc = now
+    // }
+  // var cache_bfc = +new Date();
+  // var logs = [];
+  // window.addEventListener('statechange', function () {
+  //   console.log(cache_bfc)
+  //   var now = +new Date()
+  //   if (now - cache_bfc > 3000) {
+  //     log()
+  //   }
+  //   cache_bfc = +new Date()
+  // }, false)
+  function log() {
+    logs.push('bfcache')
+    document.querySelector('#container').innerHTML = logs.join('<br>')
+  }
+  </script>
+</body>
+</html>

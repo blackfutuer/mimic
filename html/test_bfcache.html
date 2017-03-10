@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> 测试bfcache </title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <a href="./index.html">跳转页面</a>
+  <div id="container"></div>
+  <script>
+  window.getCookie = function(ckName) {
+        if (undefined == ckName || "" == ckName) {
+            return false
+        }
+        return stringSplice(document.cookie, ckName, ";", "")
+    };
+    function stringSplice(src, k, e, sp) {
+        if (src == "") {
+            return ""
+        }
+        sp = (sp == "") ? "=" : sp;
+        k += sp;
+        var ps = src.indexOf(k);
+        if (ps < 0) {
+            return ""
+        }
+        ps += k.length;
+        var pe = src.indexOf(e, ps);
+        if (pe < ps) {
+            pe = src.length
+        }
+        return src.substring(ps, pe)
+    }
+    (function() {
+      function heartbeat(fn) {
+          var heartbeat;
+          var lastInterval;
+          function clearTimers() {
+              clearTimeout(heartbeat)
+          }
+          function getTime() {
+              return (new Date()).getTime()
+          }
+          function intervalHeartbeat() {
+              var now = getTime();
+              var diff = now - lastInterval - 200;
+              lastInterval = now;
+              if (diff > 3000) {
+                  clearTimers();
+                  fn && fn()
+              }
+          }
+          lastInterval = getTime();
+          heartbeat = setInterval(intervalHeartbeat, 800)
+      }
+      heartbeat(function() {
+          log()
+          heartbeat(function() {
+            log()
+          })
+      })
+  })();
+  var logs = []
+  function log() {
+    logs.push('bfcache')
+    document.querySelector('#container').innerHTML = logs.join('<br>')
+  }
+  </script>
+</body>
+</html>
