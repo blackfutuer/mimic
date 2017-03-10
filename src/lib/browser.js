@@ -38,6 +38,9 @@ const REGX_MAP = [
     /(qqbrowser)[/\s]?([\w.]+)/i                                        // QQBrowser
   ], ['name', 'version'],
   [
+    /\s+(qq)[/\s]?([\w.]+)/i                                       // qq webview
+  ], [['name', 'QQ WebView'], 'version'],
+  [
     /(uc\s?browser)[/\s]?([\w.]+)/i,
     /ucweb.+(ucbrowser)[/\s]?([\w.]+)/i,
     /juc.+(ucweb)[/\s]?([\w.]+)/i                                     // UCBrowser
@@ -106,7 +109,7 @@ const REGX_MAP = [
 
 let browser = (() => {
   let found = false
-  let result = {name: 'unknow', version: 0} // 默认值
+  let result = {net: 'unknow', name: 'unknow', version: 0, ua: ua} // 默认值
   let i = -2
   let regxs
   let prop
@@ -125,6 +128,11 @@ let browser = (() => {
         return true
       }
     })
+  }
+  // 获取网络状态
+  let netType
+  if ((netType = /\s+NetType\/(\w+)(\s+|$)/i.exec(ua))) {
+    result.net = netType[1]
   }
   return result
 })()

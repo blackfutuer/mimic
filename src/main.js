@@ -10,7 +10,7 @@ import Service from './Service'
 import browser from './lib/browser'
 const win = window
 
-console.log(browser)
+alert('访问浏览器信息:' + JSON.stringify(browser))
 
 // 如果没有Promise, 动态载入es6-promise, 然后开始所有的事情
 if (!('Promise' in window)) {
