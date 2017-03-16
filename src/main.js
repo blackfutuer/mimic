@@ -7,10 +7,10 @@ import {COMPONENT_LIB_URL, PROMISE_POLLYFILL_URL, INTERSECTION_OBSERVER_POLLYFIL
 import {onbfcache, on} from './lib/event'
 import Slot from './Slot'
 import Service from './Service'
-import browser from './lib/browser'
+// import browser from './lib/browser'
 const win = window
 
-alert('访问浏览器信息:' + JSON.stringify(browser))
+// alert('访问浏览器信息:' + JSON.stringify(browser))
 
 // 如果没有Promise, 动态载入es6-promise, 然后开始所有的事情
 if (!('Promise' in window)) {
@@ -91,6 +91,11 @@ function bootstrap () {
 
   // 检查是否bfcache
   onbfcache((type) => {
+    let mimic = getMimic()
+    // 默认backRefresh为空，如果不为空且为数组，刷新数组中的slot
+    if (!mimic.backRefresh) {
+      return
+    }
     // 上线前记得把其他频道的给去了，只有sina.cn需要回退刷新
     try {
       updateCorrelator()

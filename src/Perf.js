@@ -82,6 +82,7 @@ class Perf {
   static getGlobalMemory () {
     return (window.performance && window.performance.memory && window.performance.memory.usedJSHeapSize) || 0
   }
+
   report (entryName, win = window) {
     let res
     let target
@@ -102,6 +103,9 @@ class Perf {
       log(this.reciveUrl, res)
     }
   }
+}
+Perf.nullPerf = {
+  report () {}
 }
 
 export default Perf

@@ -20,9 +20,10 @@
     "clean": "rm -rf ./build",
     "copy": "cp -rf ./src/pollyfill ./build/ && cp -rf ./html/* ./build/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run clean && NODE_ENV=production ./node_modules/.bin/rollup -c && npm run copy",
+    "build": "npm run clean && NODE_ENV=production ./node_modules/.bin/rollup -c && npm run copy && npm run usagejs",
     "dev": "./node_modules/.bin/rollup -c --watch",
-    "release": "node release-to-cdn.js"
+    "release": "node release-to-cdn.js",
+    "usagejs": "uglify -s usage.js -o usage.min.js"
   },
   "author": "acelan(xiaobin8[at]staff.sina.com.cn)",
   "license": "MIT"

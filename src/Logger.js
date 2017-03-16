@@ -24,5 +24,10 @@ class Logger {
     log(this._reportUrl + 't=err', formatParams(params))
   }
 }
+Logger.nullLogger = {
+  log () {},
+  info () {},
+  error () {}
+}
 
 export default Logger

@@ -7,7 +7,7 @@ var mimic = mimic || {cmd: []};
   s.id = id;
   s.setAttribute('charset', 'utf-8');
   //s.src = './mimic.js';
-  s.src = '//d1.sinaimg.cn/litong/mimic/mimic.js';
+  s.src = '//d' + Math.floor(0 + Math.random() * (9 - 0 + 1)) + '.sinaimg.cn/litong/mimic/mimic.js';
   n.parentNode.insertBefore(s, n);
   // 5s后检查下mimic的cmd，如果还是数组，那么说明mimic加载超时
   // 或者没有正常处理
@@ -52,7 +52,6 @@ var sinaad = (function () {
           slotNames.push(sn)
           var node = feeds[insertPos].parentNode
           node.parentNode.insertBefore(el, node)
-          console.log(pdps)
           var slot = mimic.defineSlot(pdps, [320, 90], sn)
           if (slot) {
             slot.addService(mimic.sns())

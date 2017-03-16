@@ -17,16 +17,17 @@ function getMimic () {
   return window.mimic || (window.mimic = {})
 }
 
-// 一些单例
 let _logger
 function getLogger (url = REC_REPORT_URL) {
-  return _logger || (_logger = new Logger(url))
+  // 如果配置了mimic.enableLogger, 那么可以记录
+  return _logger || (_logger = getMimic().enableLogger ? new Logger(url) : Logger.nullLogger)
 }
 
 // 性能监测
 let _perf = {}
 function getPerf (url = CSI_REPORT_URL) {
-  return _perf[url] || (_perf[url] = new Perf(url))
+  // mimic.enablePerf， 那么可以记录
+  return _perf[url] || (_perf[url] = getMimic().enablePerf ? new Perf(url) : Perf.nullPerf)
 }
 
 // 手势提示信息
@@ -35,7 +36,6 @@ function getGestureObserver () {
   return _go || (_go = new GestureObserver((entry) => {
     let slot = Slot.getSlotByDivId(entry.id)
     if (slot) {
-      alert(entry.innerHTML)
       alert(JSON.stringify(slot._data))
     }
   }))
