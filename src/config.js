@@ -2,7 +2,6 @@ import {top, rand} from './lib/tool'
 import {parse} from './lib/url'
 
 const URL = parse(top)
-
 const SERVER = `${URL.protocal}://csi.sina.cn`
 const CDN = `${URL.protocal}://d${rand(0, 9)}.sinaimg.cn/litong/mimic`
 // csi 用来作为性能检测使用
@@ -18,3 +17,4 @@ export const NATIVE_RESOURCE_URL = `${URL.protocal}://sax.sina.cn/native/impress
 export const COMPONENT_LIB_URL = `${CDN}/components/mimic-components.js`
 export const PROMISE_POLLYFILL_URL = `${CDN}/pollyfill/es6-promise.min.js`
 export const INTERSECTION_OBSERVER_POLLYFILL_URL = `${CDN}/pollyfill/IntersectionObserver.js`
+export const AUTHOR_INFO = '期待你的加入，简历请投：acelan(xiaobin8[at]staff.sina.cn)'

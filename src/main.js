@@ -1,4 +1,4 @@
-import {getCurrentScript} from './lib/tool'
+import {getCurrentScript, UserGrayScale} from './lib/tool'
 import {loadScript} from './lib/sio'
 import Commands from './Commands'
 import {isArray, isString} from './lib/type'
@@ -7,10 +7,13 @@ import {COMPONENT_LIB_URL, PROMISE_POLLYFILL_URL, INTERSECTION_OBSERVER_POLLYFIL
 import {onbfcache, on} from './lib/event'
 import Slot from './Slot'
 import Service from './Service'
-// import browser from './lib/browser'
+import browser from './lib/browser'
 const win = window
 
-// alert('访问浏览器信息:' + JSON.stringify(browser))
+// 灰度
+let isGrayUser = (new UserGrayScale(100)).check()
+getLogger().log(`isGrayUser: ${isGrayUser}`)
+getLogger().log(`browser: ${JSON.stringify(browser)}`)
 
 // 如果没有Promise, 动态载入es6-promise, 然后开始所有的事情
 if (!('Promise' in window)) {

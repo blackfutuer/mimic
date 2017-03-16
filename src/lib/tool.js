@@ -1,4 +1,5 @@
 import {isString, isFunction} from './type'
+import {get as getCookie} from './cookie'
 
 const win = window
 
@@ -93,3 +94,43 @@ export function prefetch (url) {
   link.href = url
   head && head.appendChild(link)
 }
+
+/**
+ * 把一个字符串生成唯一hash
+ * @param  {String} s 要生成hash的字符串
+ * @return {String}   36进制字符串
+ */
+function hash (s) {
+  let hash = 0
+  let i = 0
+  let w
+  for (; !isNaN(w = s.charCodeAt(i++));) {
+    hash = ((hash << 5) - hash) + w
+    hash = hash & hash
+  }
+  return Math.abs(hash).toString(36)
+}
+
+// 灰度测试判断方法
+class ListGrayScale {
+  constructor (list = []) {
+    this.list = list
+  }
+  check (key) {
+    return this.list.indexOf(key) !== -1
+  }
+}
+// 指定用户ustat -> ustat灰度
+// scale 为0-100的数字
+class UserGrayScale {
+  constructor (scale = 0, ustats = []) {
+    let ustat = getCookie('ustat')
+    this.gray = ustat
+      ? (new ListGrayScale(ustats)).check(ustat) || (scale > 0 ? parseInt(hash(ustat), 36) % 100 <= scale : false)
+      : false
+  }
+  check () {
+    return this.gray
+  }
+}
+export {ListGrayScale, UserGrayScale}

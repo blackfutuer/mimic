@@ -28,9 +28,9 @@
 //              | "{" | "}" | SP | HT
 // SP         = <US-ASCII SP, space (32)>
 // HT         = <US-ASCII HT, horizontal-tab (9)>
-const KEY_REG = /^[^\x00-\x20\x7f()<>@,;:\\"[\]?={}/\u0080-\uffff]+\x24/
+// const KEY_REG = /^[^\x00-\x20\x7f()<>@,;:\\"[\]?={}/\u0080-\uffff]+\x24/
 function _isValidKey (key) {
-  return KEY_REG.test(key)
+  return (new RegExp('^[^\\x00-\\x20\\x7f\\(\\)<>@,;:\\\\\\"\\[\\]\\?=\\{\\}\\/\\u0080-\\uffff]+\x24')).test(key)
 }
 /**
  * 从cookie中获取key所对应的值
@@ -42,7 +42,6 @@ function _getRaw (key) {
   if (_isValidKey(key)) {
     let reg = new RegExp(`(^| )${key}=([^;]*)(;|\x24)`)
     let result = reg.exec(document.cookie)
-
     if (result) {
       return result[2] || null
     }
