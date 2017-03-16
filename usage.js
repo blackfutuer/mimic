@@ -1,5 +1,11 @@
 // 异步加载广告代码
-var mimic = mimic || {cmd: []};
+var mimic = mimic || {
+  cmd: []
+  // ,backRefresh: true // 是否需要保持回退刷新，可以是个数组，如果是数组的话只刷新这个数组表示的slot
+  // ,enableLogger: true // 是否开始log
+  // ,enablePerf: true // 是否监测性能数据
+  // ,component: '组件所在url，可以开发成是一个数组' // 组件依赖地址
+};
 (function (d, s, id) {
   var s, n = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
