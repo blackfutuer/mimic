@@ -44,7 +44,7 @@ function getGestureObserver () {
 // 可见曝光监测
 let viewableTimer = {}
 const VISION_RATIO = 0.5 // 当大于这个比率的时候算可见
-const VISION_DURATION = 1 // 当停留超过这个时间的时候算可见，单位秒
+const VISION_DURATION = 0.3 // 当停留超过这个时间的时候算可见，单位秒
 
 let _vo
 function getViewabilityObserver () {
