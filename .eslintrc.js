@@ -28,6 +28,7 @@ module.exports = {
     Promise: false,
     IntersectionObserver: false,
     alert: false,
-    Image: false
+    Image: false,
+    confirm: false
   }
 }

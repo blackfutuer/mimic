@@ -56,6 +56,7 @@ class SaxNativeImpl {
         return slot._pdps
       }).join(),
       page_url: top,
+      npic: parseInt(getCookie('NPIC'), 10) ? 1 : 0,
       timestamp: new Date().getTime(),
       rotate_count: getCorrelator(),
       callback: 'mimic_cb_' + new Date().getTime().toString(36)
@@ -85,7 +86,7 @@ class SaxNativeImpl {
       '38': 'download',
       '40': 'dynamicpic',
       '42': 'video',
-      '34': 'nopic'
+      '34': 'text'
     }
     let slotDom
     let type
@@ -95,7 +96,7 @@ class SaxNativeImpl {
       slot._data &&
       slot._data.templateid &&
       // 如果具有NPIC的cookie，那么全部使用无图模板
-      (type = getCookie('NPIC') ? 'nopic' : typeMap[slot._data.templateid])
+      (type = parseInt(getCookie('NPIC'), 10) ? 'nopic' : typeMap[slot._data.templateid])
     ) {
       slot.mark('rs')
       // 为广告加上点击坐标替换, 只在第一次初始化slot的时候加上
@@ -118,7 +119,6 @@ class SaxNativeImpl {
       // 发送曝光
       slot.impression()
       // 实例化feed component
-      console.log(type)
       let listeners = {}
       // 如果是video需要增加播放监测
       if (type === 'video') {

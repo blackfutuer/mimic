@@ -32,11 +32,52 @@ function getPerf (url = CSI_REPORT_URL) {
 
 // 手势提示信息
 let _go
+let _goDialog
+const COPY_ERR_MSG = '复制失败，确定返回手工复制，取消直接关闭窗口'
+function alertGoMsg (msg) {
+  if (!_goDialog) {
+    _goDialog = document.createElement('div')
+    _goDialog.style.cssText = 'display:none;z-index:99999;background:rgba(0, 0, 0, .5);height:100%;width:100%;position:fixed;top:0px'
+    _goDialog.addEventListener('touchend', (e) => {
+      if (e.target.tagName.toUpperCase() === 'A') {
+        try {
+          let msg = _goDialog.querySelector('.mc-debug-msg')
+          let range = document.createRange()
+          range.selectNode(msg)
+          window.getSelection().addRange(range)
+          let succ = document.execCommand('copy')
+          if (succ) {
+            e.target.parentNode.parentNode.style.display = 'none'
+          } else {
+            if (!confirm(COPY_ERR_MSG)) {
+              e.target.parentNode.parentNode.style.display = 'none'
+            }
+          }
+          window.getSelection().removeAllRanges()
+        } catch (e) {
+          if (!confirm(COPY_ERR_MSG)) {
+            e.target.parentNode.parentNode.style.display = 'none'
+          }
+        }
+      }
+      e.stopPropagation()
+      e.preventDefault()
+    }, false)
+    document.body.appendChild(_goDialog)
+  }
+  _goDialog.innerHTML = [
+    '<div style="top:80px;position:absolute;width:80%;background:#fff;border-radius:5px;border:1px solid #ccc;left:10%;box-sizing:border-box;">',
+    '<div class="mc-debug-msg" style="max-height:300px;margin:20px;overflow:auto;font-size:14px;line-height:20px;word-break:break-all;">' + msg + '</div>',
+    '<a style="text-decoration:none;color:#333;display:block;line-height:50px;font-size:18px;text-align:center;border-top: 1px solid #efefef;" href="javascript:;">复制并关闭</a>',
+    '</div>'
+  ].join('')
+  _goDialog.style.display = 'block'
+}
 function getGestureObserver () {
   return _go || (_go = new GestureObserver((entry) => {
     let slot = Slot.getSlotByDivId(entry.id)
     if (slot) {
-      alert(JSON.stringify(slot._data))
+      alertGoMsg(JSON.stringify(slot._data))
     }
   }))
 }

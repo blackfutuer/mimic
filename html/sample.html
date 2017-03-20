@@ -1,0 +1,75 @@
+<html style="font-size:53px;">
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" id="viewport" />
+  </head>
+  <style>
+    html,body,dt,dl,dd,ul,li,h3,h4{margin:0;padding:0;}
+  </style>
+  <body>
+  <div style="height:300px"></div>
+<script>
+var mimic = mimic || {
+  cmd: []
+  // ,backRefresh: true // 是否需要保持回退刷新，可以是个数组，如果是数组的话只刷新这个数组表示的slot
+  // ,enableLogger: true // 是否开始log
+  // ,enablePerf: true // 是否监测性能数据
+  //,component: '//10.237.66.67:2222/dist/mimic-components.js' // 组件依赖地址
+};
+(function (d, s, id) {
+  var s, n = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  s = d.createElement(s);
+  s.id = id;
+  s.setAttribute('charset', 'utf-8');
+  s.src = '//d' + Math.floor(0 + Math.random() * (9 - 0 + 1)) + '.sinaimg.cn/litong/mimic/mimic.js';
+  // s.src = '../build/mimic.js';
+  n.parentNode.insertBefore(s, n);
+  // 5s后检查下mimic的cmd，如果还是数组，那么说明mimic加载超时
+  // 或者没有正常处理
+  setTimeout(function () {
+    if (Object.prototype.toString.call(mimic.cmd) === '[object Array]') {
+      var img = new Image()
+      img.src = '//csi.sina.cn/csi?mimic_lib_timeout&ts=' + (+new Date)
+    }
+  }, 5 * 1000)
+})(document, 'script', 'mimic')
+mimic.cmd.push(function () {
+  mimic
+    .defineSlot('PDPS000000056294', [1000, 90], 'xxxx')
+    .addService(mimic.sns())
+  mimic
+  .defineSlot('PDPS000000056295', [1000, 90], 'xxxx-1')
+  .addService(mimic.sns())
+
+  mimic.sns().enableSingleRequest()
+  mimic.enableServices()
+})
+</script>
+<div id="xxxx"></div>
+<script>
+  mimic.cmd.push(function () {
+    mimic.display('xxxx')
+  })
+</script>
+<div style="height:300px"></div>
+<div id="xxxx-1"></div>
+<script>
+  mimic.cmd.push(function () {
+    mimic.display('xxxx-1')
+  })
+</script>
+<div style="height:300px"></div>
+<div id="xxxx-2"></div>
+<script>
+  mimic.cmd.push(function () {
+    setTimeout(function () {
+      mimic
+        .defineSlot('PDPS000000056296', [1000, 90], 'xxxx-2')
+        .addService(mimic.sns())
+      mimic.enableServices()
+      mimic.display('xxxx-2')
+    }, 1000)
+  })
+</script>
+</body>
+</html>
