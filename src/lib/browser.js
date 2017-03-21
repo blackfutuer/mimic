@@ -131,7 +131,7 @@ let browser = (() => {
   }
   // 获取网络状态
   let netType
-  if ((netType = /\s+NetType\/(\w+)(\s+|$)/i.exec(ua))) {
+  if ((netType = /NetType\/([^\s]*)/i.exec(ua))) {
     result.net = netType[1]
   }
   return result
