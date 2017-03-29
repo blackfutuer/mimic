@@ -1,12 +1,16 @@
 import {getPerf, getGestureObserver, getViewabilityObserver, getLogger, getSaxNativeService, getCorrelator, isDebug} from './util'
-import {getDom, top} from './lib/tool'
+import {getDom, top, shuffle, ListGrayScale} from './lib/tool'
 import {jsonp} from './lib/sio'
 import {isArray, isFunction} from './lib/type'
 import {NATIVE_RESOURCE_URL} from './config'
 import Slot from './Slot'
 import {on} from './lib/event'
-import {get as getCookie} from './lib/cookie'
+import {get as getCookie, set as setCookie, remove as removeCookie} from './lib/cookie'
 import {appendQuery} from './lib/url'
+
+// 使用自动训练的智能请求顺序， 这里灰度博客频道首页
+const useTrainningReqOrder = new ListGrayScale(['blog.sina.cn']).check(window.location.hostname)
+console.log(`智能训练反屏蔽参数顺序开关：${useTrainningReqOrder}`)
 
 class SaxNativeImpl {
   constructor () {
@@ -28,21 +32,30 @@ class SaxNativeImpl {
       })
       // 获取当前impl.adData中还没有开始fetch的slot
       // 获取还没有开始fetch的slot中符合尺寸的slot
-      let url = this.getRequestUrl({slots})
+      let {url, keys} = this.getRequestUrl({slots})
       this._slotListMapByRequestIndex[this._requestIndex] = slots
       if (!Slot.isPersistent(slots[0])) {
         getLogger().log('get ad' + (+new Date()))
         jsonp(
           url,
-          ((requestIndex, url, response) => {
+          ((requestIndex, url, keys, response) => {
             getPerf().report(url)
+            // 请求成功就把顺序写入cookie
+            useTrainningReqOrder && setCookie('ANTI_ADB_KEYS', keys.join(','), {expires: 365 * 24 * 60 * 60 * 1000})
             this.processResponse(response, requestIndex)
-          }).bind(this, this._requestIndex++, url),
+          }).bind(this, this._requestIndex++, url, keys),
           {
             timeout: 3 * 1000,
-            onfailure: ((url) => {
-              getLogger().error({message: 'mimic: field', url: url})
-            }).bind(this, url)
+            onfailure: ((url, keys) => {
+              // 请求失败就清除cookie中存在的请求顺序
+              useTrainningReqOrder && removeCookie('ANTI_ADB_KEYS')
+              // 20170329 监测广告屏蔽问题
+              var img = new Image()
+              // 并且把请求失败的keys顺序记录下来
+              img.src = `//sax.sina.com.cn/view?type=mimic_req&cat=timeout&ts=${+new Date()}&ref=${encodeURIComponent(window.top.url)}&req_order=${keys.join(',')}`
+              // 20170329 -end
+              getLogger().error({message: 'mimic: field', url: url, keys: keys.join(',')})
+            }).bind(this, url, keys)
           }
         )
       }
@@ -59,14 +72,23 @@ class SaxNativeImpl {
       npic: parseInt(getCookie('NPIC'), 10) ? 1 : 0,
       timestamp: new Date().getTime(),
       rotate_count: getCorrelator(),
-      callback: 'mimic_cb_' + new Date().getTime().toString(36)
+      callback: `mimic_cb_${new Date().getTime().toString(36)}`
+    }
+    let keys = ['callback', 'adunit_id', 'page_url', 'npic', 'timestamp', 'rotate_count']
+    if (useTrainningReqOrder) {
+      keys = getCookie('ANTI_ADB_KEYS')
+      // 自探测自修复程序，如果有存储了keys，说明和这个keys顺序可以反屏蔽，就用keys的顺序，否则就找个新的顺序
+      keys = keys ? keys.split(',') : shuffle(Object.keys(params))
     }
     let queryString = []
-    Object.keys(params).forEach(key => {
+    keys.forEach(key => {
       let value = params[key]
       value && queryString.push(`${key}=${encodeURIComponent(value)}`)
     })
-    return `${host}?${queryString.join('&')}`
+    return {
+      url: `${host}?${queryString.join('&')}`,
+      keys: keys
+    }
   }
   renderSlot (slot) {
     // 如果有填充，那么调用填充的组件的销毁方法

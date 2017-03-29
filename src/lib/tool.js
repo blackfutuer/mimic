@@ -134,3 +134,15 @@ class UserGrayScale {
   }
 }
 export {ListGrayScale, UserGrayScale}
+
+// 洗牌算法 Knuth-Durstenfeld shuffle
+// 用于随机排序sax接口的参数，尽量规避命中屏蔽规则
+export function shuffle (arr) {
+  let n = arr.length
+  let rand
+  while (n !== 0) {
+    rand = (Math.random() * n--) >>> 0  // 向下取整
+    ;[arr[n], arr[rand]] = [arr[rand], arr[n]]
+  }
+  return arr
+}

@@ -13,14 +13,15 @@ var mimic = mimic || {
   s.id = id;
   s.setAttribute('charset', 'utf-8');
   s.src = '//d' + Math.floor(0 + Math.random() * (9 - 0 + 1)) + '.sinaimg.cn/litong/mimic/mimic.js';
-  s.src = '../build/mimic.js';
+  // s.src = '../build/mimic.js';
   n.parentNode.insertBefore(s, n);
   // 5s后检查下mimic的cmd，如果还是数组，那么说明mimic加载超时
   // 或者没有正常处理
   setTimeout(function () {
     if (Object.prototype.toString.call(mimic.cmd) === '[object Array]') {
       var img = new Image()
-      img.src = '//csi.sina.cn/csi?mimic_lib_timeout&ts=' + (+new Date)
+      img.src = '//sax.sina.com.cn/view?type=mimic_lib&cat=timeout&ts=' + (+new Date) + '&ref=' + encodeURIComponent(window.top.url)
+      // img.src = '//csi.sina.cn/csi?mimic_lib_timeout&ts=' + (+new Date)
     }
   }, 5 * 1000)
 })(document, 'script', 'mimic')
