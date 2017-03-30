@@ -20,7 +20,7 @@ var mimic = mimic || {
   setTimeout(function () {
     if (Object.prototype.toString.call(mimic.cmd) === '[object Array]') {
       var img = new Image()
-      img.src = '//sax.sina.com.cn/view?type=mimic_lib&cat=timeout&ts=' + (+new Date) + '&ref=' + encodeURIComponent(window.top.url)
+      img.src = '//sax.sina.com.cn/view?type=mimic_lib&cat=timeout&ts=' + (+new Date) + '&ref=' + encodeURIComponent(window.top.location.href)
       // img.src = '//csi.sina.cn/csi?mimic_lib_timeout&ts=' + (+new Date)
     }
   }, 5 * 1000)

@@ -52,7 +52,7 @@ class SaxNativeImpl {
               // 20170329 监测广告屏蔽问题
               var img = new Image()
               // 并且把请求失败的keys顺序记录下来
-              img.src = `//sax.sina.com.cn/view?type=mimic_req&cat=timeout&ts=${+new Date()}&ref=${encodeURIComponent(window.top.url)}&req_order=${keys.join(',')}`
+              img.src = `//sax.sina.com.cn/view?type=mimic_req&cat=timeout&ts=${+new Date()}&ref=${encodeURIComponent(top)}&req_order=${keys.join(',')}`
               // 20170329 -end
               getLogger().error({message: 'mimic: field', url: url, keys: keys.join(',')})
             }).bind(this, url, keys)
