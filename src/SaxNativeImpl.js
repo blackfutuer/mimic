@@ -10,7 +10,7 @@ import {appendQuery} from './lib/url'
 
 // 使用自动训练的智能请求顺序， 这里灰度博客频道首页
 const useTrainningReqOrder = new ListGrayScale(['blog.sina.cn']).check(window.location.hostname)
-console.log(`智能训练反屏蔽参数顺序开关：${useTrainningReqOrder}`)
+console.log(`mimic tranning：${useTrainningReqOrder}`)
 
 class SaxNativeImpl {
   constructor () {
@@ -40,7 +40,7 @@ class SaxNativeImpl {
           url,
           ((requestIndex, url, keys, response) => {
             getPerf().report(url)
-            // 请求成功就把顺序写入cookie
+            // 请求成功就把顺序写入cookie, 这里如果写成主页可以不用每个域名都探测, 但是要增加代码进行主域提取 @TODO
             useTrainningReqOrder && setCookie('ANTI_ADB_KEYS', keys.join(','), {expires: 365 * 24 * 60 * 60 * 1000})
             this.processResponse(response, requestIndex)
           }).bind(this, this._requestIndex++, url, keys),
