@@ -19,9 +19,9 @@ getLogger().log(`browser: ${JSON.stringify(browser)}`)
 if (new ListGrayScale(['blog.sina.cn']).check(window.location.hostname)) {
   setPropToMimic('enableLogger', true)
   setPropToMimic('enablePerf', true)
-  console.log(`mimic log：${getMimic().enableLogger}`)
-  console.log(`mimic performance：${getMimic().enablePerf}`)
 }
+console.log(`mimic log：${getMimic().enableLogger}`)
+console.log(`mimic performance：${getMimic().enablePerf}`)
 
 // 如果没有Promise, 动态载入es6-promise, 然后开始所有的事情
 if (!('Promise' in window)) {
