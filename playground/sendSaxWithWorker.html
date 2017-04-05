@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title> 测试用worker发送sax请求是否会被adblock拦截 </title>
+</head>
+<body>
+  <script>
+    var worker = new Worker("worker.js")
+    worker.postMessage("hello world")
+    worker.onmessage =function(evt){
+      console.log(evt.data);
+    }
+ </script>
+</body>
+</html>

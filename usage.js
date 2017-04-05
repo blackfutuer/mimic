@@ -2,7 +2,7 @@
 var mimic = mimic || {
   cmd: []
   // ,backRefresh: true // 是否需要保持回退刷新，可以是个数组，如果是数组的话只刷新这个数组表示的slot
-  // ,enableLogger: true // 是否开始log
+  // ,enableLogger: 'log|error' // 是否开始log
   // ,enablePerf: true // 是否监测性能数据
   //,component: '//10.237.66.67:2222/dist/mimic-components.js' // 组件依赖地址
 };

@@ -1,4 +1,4 @@
-import {getCurrentScript, UserGrayScale} from './lib/tool'
+import {getCurrentScript, UserGrayScale, ListGrayScale} from './lib/tool'
 import {loadScript} from './lib/sio'
 import Commands from './Commands'
 import {isArray, isString} from './lib/type'
@@ -14,6 +14,14 @@ const win = window
 let isGrayUser = (new UserGrayScale(100)).check()
 getLogger().log(`isGrayUser: ${isGrayUser}`)
 getLogger().log(`browser: ${JSON.stringify(browser)}`)
+
+// 如果是博客频道，那么就开启性能跟日志记录
+if (new ListGrayScale(['blog.sina.cn']).check(window.location.hostname)) {
+  setPropToMimic('enableLogger', true)
+  setPropToMimic('enablePerf', true)
+  console.log(`mimic log：${getMimic().enableLogger}`)
+  console.log(`mimic performance：${getMimic().enablePerf}`)
+}
 
 // 如果没有Promise, 动态载入es6-promise, 然后开始所有的事情
 if (!('Promise' in window)) {
