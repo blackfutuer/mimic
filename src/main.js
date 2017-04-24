@@ -10,18 +10,20 @@ import Service from './Service'
 import browser from './lib/browser'
 const win = window
 
-// 灰度
-let isGrayUser = (new UserGrayScale(100)).check()
-getLogger().log(`isGrayUser: ${isGrayUser}`)
-getLogger().log(`browser: ${JSON.stringify(browser)}`)
-
-// 如果是博客频道，那么就开启性能跟日志记录
-if (new ListGrayScale(['blog.sina.cn']).check(window.location.hostname)) {
+// 如果是博客军事频道，那么就开启性能跟日志记录
+if (new ListGrayScale(['blog.sina.cn', 'mil.sina.cn']).check(window.location.hostname)) {
+  // 暂时先不用debug
   setPropToMimic('enableLogger', true)
   setPropToMimic('enablePerf', true)
 }
-console.log(`mimic log：${getMimic().enableLogger}`)
-console.log(`mimic performance：${getMimic().enablePerf}`)
+
+// 灰度
+let isGrayUser = (new UserGrayScale(100)).check()
+getLogger().info(`isGrayUser: ${isGrayUser}`)
+getLogger().info(`browser: ${JSON.stringify(browser)}`)
+
+console.info(`mimic log：${getMimic().enableLogger}`)
+console.info(`mimic performance：${getMimic().enablePerf}`)
 
 // 如果没有Promise, 动态载入es6-promise, 然后开始所有的事情
 if (!('Promise' in window)) {
@@ -52,7 +54,7 @@ function promisePollyfillReady () {
   }))
   // 当所有依赖加载完成后开始广告脚本初始化
   Promise.all(deps).then(() => {
-    getLogger().log('mimic:deps ready')
+    getLogger().info('mimic:deps ready')
     if (win.mimic.evalScripts) {
       win.mimic.evalScripts()
     } else {
@@ -60,7 +62,7 @@ function promisePollyfillReady () {
       bootstrap()
     }
   }, () => {
-    getLogger().log('mimic: can not bootstrap')
+    getLogger().error('mimic: can not bootstrap')
   })
 }
 
@@ -115,9 +117,9 @@ function bootstrap () {
         service.refresh()
       })
     } catch (e) {
-      getLogger().log('refresh error: ' + e.message)
+      getLogger().info('refresh error: ' + e.message)
     }
-    getLogger().log('mimic:bfcache[' + type + ']' + JSON.stringify(mimic))
+    getLogger().info('mimic:bfcache[' + type + ']' + JSON.stringify(mimic))
   })
 
   // @TODO
@@ -127,7 +129,7 @@ function bootstrap () {
   getPerf().report(INTERSECTION_OBSERVER_POLLYFILL_URL)
   getPerf().report(mimic.component)
   on(win, 'load', () => {
-    getLogger().log('mimic:onload')
+    getLogger().info('mimic:onload')
     getPerf().report()
   })
 }

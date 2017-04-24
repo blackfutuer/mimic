@@ -18,7 +18,7 @@ export function parse (url) {
   let URL
   if (match) {
     URL = {}
-    ;['', 'protocal', 'name', 'domian', 'port', 'path', 'query', 'hash'].forEach((key, i) => {
+    ;['', 'protocal', 'name', 'domain', 'port', 'path', 'query', 'hash'].forEach((key, i) => {
       if (key && match[i]) {
         URL[key] = match[i]
       }

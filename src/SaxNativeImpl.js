@@ -2,14 +2,14 @@ import {getPerf, getGestureObserver, getViewabilityObserver, getLogger, getSaxNa
 import {getDom, top, shuffle, ListGrayScale} from './lib/tool'
 import {jsonp} from './lib/sio'
 import {isArray, isFunction} from './lib/type'
-import {NATIVE_RESOURCE_URL} from './config'
+import {NATIVE_RESOURCE_URL, DEFAULT_NATIVE_RESOURCE_URL} from './config'
 import Slot from './Slot'
 import {on} from './lib/event'
 import {get as getCookie, set as setCookie, remove as removeCookie} from './lib/cookie'
-import {appendQuery} from './lib/url'
+import {appendQuery, parse} from './lib/url'
 
 // 使用自动训练的智能请求顺序， 这里灰度博客频道首页
-const useTrainningReqOrder = new ListGrayScale(['blog.sina.cn']).check(window.location.hostname)
+const useTrainningReqOrder = new ListGrayScale(['blog.sina.cn', 'mil.sina.cn']).check(window.location.hostname)
 console.log(`mimic tranning：${useTrainningReqOrder}`)
 
 class SaxNativeImpl {
@@ -35,26 +35,32 @@ class SaxNativeImpl {
       let {url, keys} = this.getRequestUrl({slots})
       this._slotListMapByRequestIndex[this._requestIndex] = slots
       if (!Slot.isPersistent(slots[0])) {
-        getLogger().log('get ad' + (+new Date()))
+        getLogger().info('get ad' + (+new Date()))
         jsonp(
           url,
           ((requestIndex, url, keys, response) => {
             getPerf().report(url)
+            if (useTrainningReqOrder) {
+              let URL = parse(url)
+              setCookie('ANTI_ADB_HOST', URL.domain, {expires: 365 * 24 * 60 * 60 * 1000, domain: '.sina.cn'})
+            }
             // 请求成功就把顺序写入cookie, 这里如果写成主页可以不用每个域名都探测, 但是要增加代码进行主域提取 @TODO
-            useTrainningReqOrder && setCookie('ANTI_ADB_KEYS', keys.join(','), {expires: 365 * 24 * 60 * 60 * 1000})
+            useTrainningReqOrder && setCookie('ANTI_ADB_KEYS', keys.join(','), {expires: 365 * 24 * 60 * 60 * 1000, domain: '.sina.cn'})
             this.processResponse(response, requestIndex)
           }).bind(this, this._requestIndex++, url, keys),
           {
             timeout: 3 * 1000,
             onfailure: ((url, keys) => {
+              useTrainningReqOrder && removeCookie('ANTI_ADB_HOST')
               // 请求失败就清除cookie中存在的请求顺序
               useTrainningReqOrder && removeCookie('ANTI_ADB_KEYS')
+              let URL = parse(url)
               // 20170329 监测广告屏蔽问题
-              var img = new Image()
+              let img = new Image()
               // 并且把请求失败的keys顺序记录下来
               img.src = `//sax.sina.com.cn/view?type=mimic_req&cat=timeout&ts=${+new Date()}&ref=${encodeURIComponent(top)}&req_order=${keys.join(',')}`
               // 20170329 -end
-              getLogger().error({message: 'mimic: field', type: 'mimic_req', cat: 'timeout', url: url, keys: keys.join(','), ref: top})
+              getLogger().error({message: 'mimic: field', type: 'mimic_req', cat: 'timeout', domain: URL.domain, url: url, keys: keys.join(','), ref: top})
             }).bind(this, url, keys)
           }
         )
@@ -62,7 +68,7 @@ class SaxNativeImpl {
     }
   }
   getRequestUrl (conf) {
-    let host = NATIVE_RESOURCE_URL
+    let host = useTrainningReqOrder ? NATIVE_RESOURCE_URL : DEFAULT_NATIVE_RESOURCE_URL
     let params = {
       adunit_id: conf.slots.map((slot) => {
         slot.mark('fs')

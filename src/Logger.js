@@ -15,9 +15,10 @@ class Logger {
     console.log(params)
     log(this._reportUrl + 't=log', formatParams(params))
   }
+  // info不需要发送日志
   info (params) {
     console.info(params)
-    log(this._reportUrl + 't=info', formatParams(params))
+    // log(this._reportUrl + 't=info', formatParams(params))
   }
   error (params) {
     console.error(params)

@@ -8,7 +8,6 @@ import SaxNativeService from './SaxNativeService'
 import storage from './lib/storage'
 import {rand, top} from './lib/tool'
 // import {isFunction} from './lib/type'
-
 /**
  * 获取全局的名字空间mimic，如果没有，那么创建一个
  * @return {Object} mimic singleton

@@ -45,7 +45,7 @@ let ls = {
  * 根据浏览器支持选择相关的存储方案
  * 隐私模式下storage会写入失败
  */
-let storage = window.localStorage ? ls : cookie
+let storage = 'localStorage' in window ? ls : cookie
 
 /**
  * 测试storage是否成功，隐私模式下localstorage会失败

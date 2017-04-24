@@ -14,7 +14,7 @@ class Commands {
           this._success++
         }
       } catch (e) {
-        getLogger().log(e.message)
+        getLogger().error(e.message)
         this._error++
       }
     }

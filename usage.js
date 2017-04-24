@@ -30,7 +30,11 @@ var mimic = mimic || {
 var sinaad = (function () {
   var uuid = 0
   function genSlotName () {
-    return 'slot-' + (+new Date()).toString(36) + (uuid++)
+    return (+new Date()).toString(36) + (uuid++)
+  }
+  // 判断某一个节点是否隐藏，如果插入的广告的前一个节点是隐藏的，那么他也要隐藏
+  function isHide (node) {
+    return feed.offsetHeight <= 0 || feed.offsetWidth <=0
   }
   function insert() {
     var channelPushs = window.channelPushs || []
@@ -44,7 +48,9 @@ var sinaad = (function () {
         var ad = channelPushs[i]
         var pdps
         var insertPos = ad.cardPos - i - 1
-        if (ad.inserted) {
+        // 1、如果已经插入过了，那么跳过这个位置
+        // 2、如果这个位置是隐藏状态，那么也跳过
+        if (ad.inserted || (feeds[insertPos - 1] && isHide(feeds[insertPos - 1]))) {
           continue
         }
         if (
