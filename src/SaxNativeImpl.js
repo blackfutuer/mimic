@@ -9,7 +9,7 @@ import {get as getCookie, set as setCookie, remove as removeCookie} from './lib/
 import {appendQuery, parse} from './lib/url'
 
 // 使用自动训练的智能请求顺序， 这里灰度博客频道首页
-const useTrainningReqOrder = new ListGrayScale(['blog.sina.cn', 'mil.sina.cn']).check(window.location.hostname)
+const useTrainningReqOrder = new ListGrayScale(['blog.sina.cn', 'mil.sina.cn', 'news.sina.cn', 'ent.sina.cn']).check(window.location.hostname)
 console.log(`mimic tranning：${useTrainningReqOrder}`)
 
 class SaxNativeImpl {

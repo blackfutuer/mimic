@@ -49,11 +49,14 @@ function promisePollyfillReady () {
   // 这里可以加载其他的pollyfill
   //
   // 载入对应的展示组件
-  deps.push(new Promise((resolve) => {
-    loadScript(mimic.component, resolve)
-  }))
+  // 防止重新加载
+  if (!('SinaAD' in window)) {
+    deps.push(new Promise((resolve) => {
+      loadScript(mimic.component, resolve)
+    }))
+  }
   // 当所有依赖加载完成后开始广告脚本初始化
-  Promise.all(deps).then(() => {
+  (deps.length > 0 ? Promise.all(deps) : Promise.resolve()).then(() => {
     getLogger().info('mimic:deps ready')
     if (win.mimic.evalScripts) {
       win.mimic.evalScripts()

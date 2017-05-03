@@ -20,6 +20,11 @@ export function rand (min, max) {
   return Math.floor(min + Math.random() * (max - min + 1))
 }
 
+export function leftpad (str, len, ch) {
+  str = str + ''
+  return len > str.length ? Array(len - str.length + 1).join(ch) + str : str
+}
+
 export function getDom (el, owerDoc = document) {
   return isString(el) ? owerDoc.getElementById(el) : el
 }
