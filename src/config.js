@@ -18,10 +18,12 @@ export const BACKUP_NATIVE_RESOURCE_URL_LIST = [
   // 'sax.sina.com.cn',
   'sax.sina.cn'
 ].concat(
+  []
   // 加入sax0-9.sina.com.cn
-  Array.apply(null, new Array(10)).map((item, i) => {
-    return `sax${i}.sina.com.cn`
-  })
+  // 20170506 sax0-9都被封禁了
+  // Array.apply(null, new Array(10)).map((item, i) => {
+  //   return `sax${i}.sina.cn`
+  // })
   // // 加入sax0-9.sina.cn
   // Array.apply(null, new Array(10)).map((item, i) => {
   //   return `sax${i}.sina.cn`
