@@ -23,7 +23,7 @@
     "build": "npm run clean && NODE_ENV=production ./node_modules/.bin/rollup -c && npm run copy && npm run usagejs",
     "dev": "./node_modules/.bin/rollup -c --watch",
     "release": "node release-to-cdn.js",
-    "usagejs": "uglify -s usage.js -o usage.min.js"
+    "usagejs": "uglifyjs usage.js -o usage.min.js"
   },
   "author": "acelan(xiaobin8[at]staff.sina.com.cn)",
   "license": "MIT"
