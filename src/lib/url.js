@@ -34,4 +34,3 @@ export function appendQuery (url, querys) {
   }
   return `${url}${seg}${queryString.join('&')}`
 }
-

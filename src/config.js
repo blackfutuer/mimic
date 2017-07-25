@@ -29,7 +29,7 @@ export const BACKUP_NATIVE_RESOURCE_URL_LIST = [
   //   return `sax${i}.sina.cn`
   // })
 )
-export const DEFAULT_NATIVE_RESOURCE_URL = `${URL.protocal}://sax.sina.cn/native/impress`
+export const DEFAULT_NATIVE_RESOURCE_URL = `${URL.protocal}://sax.sina.cn/ssp/wap/native`
 export const NATIVE_RESOURCE_URL = `${URL.protocal}://${getCookie('ANTI_ADB_HOST') || BACKUP_NATIVE_RESOURCE_URL_LIST[rand(0, BACKUP_NATIVE_RESOURCE_URL_LIST.length - 1)]}/native/impress`
 export const COMPONENT_LIB_URL = `${CDN}/components/mimic-components.js`
 export const PROMISE_POLLYFILL_URL = `${CDN}/pollyfill/es6-promise.min.js`

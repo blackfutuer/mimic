@@ -7,6 +7,7 @@ import Slot from './Slot'
 import {on} from './lib/event'
 import {get as getCookie, set as setCookie, remove as removeCookie} from './lib/cookie'
 import {appendQuery, parse} from './lib/url'
+import {uuid} from './lib/uuid'
 
 // 使用自动训练的智能请求顺序， 这里灰度博客频道首页
 const useTrainningReqOrder = new ListGrayScale(['blog.sina.cn', 'mil.sina.cn', 'news.sina.cn', 'ent.sina.cn']).check(window.location.hostname)
@@ -74,13 +75,14 @@ class SaxNativeImpl {
         slot.mark('fs')
         return slot._pdps
       }).join(),
-      page_url: top,
+      appname: top,
       npic: parseInt(getCookie('NPIC'), 10) ? 1 : 0,
       timestamp: new Date().getTime(),
       rotate_count: getCorrelator(),
+      pid: uuid(32) + new Date().getTime(),
       callback: `mimic_cb_${new Date().getTime().toString(36)}`
     }
-    let keys = ['callback', 'adunit_id', 'page_url', 'npic', 'timestamp', 'rotate_count']
+    let keys = ['callback', 'adunit_id', 'appname', 'npic', 'timestamp', 'rotate_count', 'pid']
     if (useTrainningReqOrder) {
       keys = getCookie('ANTI_ADB_KEYS')
       // 自探测自修复程序，如果有存储了keys，说明和这个keys顺序可以反屏蔽，就用keys的顺序，否则就找个新的顺序
@@ -114,7 +116,8 @@ class SaxNativeImpl {
       '38': 'download',
       '40': 'dynamicpic',
       '42': 'video',
-      '34': 'text'
+      '34': 'text',
+      '39': 'bigpicHD'
     }
     let slotDom
     let type
